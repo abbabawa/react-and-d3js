@@ -1,8 +1,11 @@
 import React, { useRef, useEffect } from "react";
 import * as d3 from "d3";
 
+
 const LineChart = (props) => {
   const svgRef = useRef(null);
+
+  // console.log(FileAttachment("temperature.csv").text())
 
   useEffect(() => {
     // D3 Code

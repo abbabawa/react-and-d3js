@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import LineChart from './components/LineChart'
+import ScatterPlot from './components/ScatterPlot';
 
 let data = [
   { date: 20220101, impressions: 100 },
@@ -12,7 +13,8 @@ let data = [
 function App() {
   return (
     <div className="App">
-      <LineChart Data={data} />
+      <ScatterPlot />
+      {/* <LineChart Data={data} /> */}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 .App {
+  margin-top: 50px;
   text-align: center;
 }
 
@@ -35,4 +36,25 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+body{
+  background-color: #ccc;
+  width: 100%;
+}
+#chart{
+  background-color: #ccc;
+  width: 1000px;
+  height: 500px;
+  margin: 50px auto;
+  border: solid 1px #000;
+}
+svg{
+  background-color: #fff;
+}
+
+.dot{
+  stroke: #000;
+  stroke-width: 1px;
 }
