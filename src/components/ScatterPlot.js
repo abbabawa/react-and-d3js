@@ -75,7 +75,7 @@ const ScatterPlot = (props) => {
 
       xScale = d3
         .scaleLinear()
-        .domain([xMinMax[0], xMinMax[1]])
+        .domain([xMinMax[1], xMinMax[0]])
         .range([
           dimensions.margins + rValues[1],
           dimensions.width - dimensions.margins - rValues[1],
@@ -112,9 +112,24 @@ const ScatterPlot = (props) => {
         })
         .style("opacity", function (d) {
           return d.charles == 1 ? 1 : 0.3;
+        })
+        .on("mouseover", function (e, d) {
+          let html = "X | poor: " + d.poor + "<br />";
+          html += "Y | rooms: " + d.rooms + "<br />";
+          html += "R | value: " + d.value + "<br />";
+          html += "C | charles: " + d.charles;
+          console.log(e, d3);
+          d3.select("#tooltip")
+            .html(html)
+            .style("left", e.x - 100)
+            .style("top", e.y - 150)
+            .style("opacity", 0.85);
+        })
+        .on("mouseout", function () {
+          d3.select("#tooltip").style("left", -1000).style("opacity", 0);
         });
 
-      let xAxis = d3.axisBottom(xScale).tickValues([xMinMax[0], xMinMax[1]]);
+      let xAxis = d3.axisBottom(xScale).ticks(0);
       let yAxis = d3.axisLeft(yScale).tickValues([yMinMax[0], yMinMax[1]]);
 
       let xAxisG = container
@@ -135,6 +150,22 @@ const ScatterPlot = (props) => {
       yAxisG
         .call(yAxis)
         .attr("transform", "translate(" + dimensions.margins + ",0)");
+
+      container
+        .append("text")
+        .attr("x", xScale(xMinMax[0]))
+        .attr("y", yScale(yMinMax[0]) + dimensions.margins)
+        .attr("text-anchor", "middle")
+        .attr("class", "axisLabel")
+        .text("more wealthy");
+
+      container
+        .append("text")
+        .attr("x", xScale(xMinMax[1]))
+        .attr("y", yScale(yMinMax[0]) + dimensions.margins)
+        .attr("text-anchor", "middle")
+        .attr("class", "axisLabel")
+        .text("less wealthy");
       update();
     });
     function update() {
@@ -145,23 +176,30 @@ const ScatterPlot = (props) => {
         })
         .attr("r", function (d) {
           return rScale(d.value);
-        }).delay(function (d, i) {
-            return i * 100;
-          }).attr("cx", function (d) {
-            return xScale(d.poor);
-          });
+        })
+        .delay(function (d, i) {
+          return i * 30;
+        })
+        .attr("cx", function (d) {
+          return xScale(d.poor);
+        });
 
-    //   circles
-    //     .transition()
-    //     .delay(function (d, i) {
-    //       return i * 10;
-    //     })
-    //     .attr("cx", function (d) {
-    //         return xScale(d.poor);
-    //       });
+      //   circles
+      //     .transition()
+      //     .delay(function (d, i) {
+      //       return i * 10;
+      //     })
+      //     .attr("cx", function (d) {
+      //         return xScale(d.poor);
+      //       });
     }
   }, [props.Data, svgRef.current]);
-  return <div ref={svgRef}></div>; //<svg ref={svgRef} />;
+  return (
+    <>
+      <div ref={svgRef}></div>
+      <div id="tooltip"></div>
+    </>
+  ); //<svg ref={svgRef} />;
 };
 
 export default ScatterPlot;

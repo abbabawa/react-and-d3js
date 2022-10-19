@@ -58,3 +58,26 @@ svg{
   stroke: #000;
   stroke-width: 1px;
 }
+
+.dot{
+  stroke: #000;
+  stroke-width: 1px;
+}
+.axis line, .axis path{
+  stroke: #bbb;
+}
+.axis text{
+  fill: #bbb;
+}
+.axisLabel{
+  fill: #bbb;
+  font: sans-serif;
+  font-size: 10px;
+}
+#tooltip{
+  position: absolute;
+  background-color: #fff;
+  padding: 20px;
+  border: solid 1px #000;
+  opacity: 0;
+}
